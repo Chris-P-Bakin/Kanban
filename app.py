@@ -112,8 +112,8 @@ def init_db():
         # Add sample users if none exist
         if User.query.count() == 0:
             sample_users = [
-                User(name="Thomas"),
-                User(name="Kelly"),
+                User(name="Alice"),
+                User(name="Bob"),
             ]
             
             for user in sample_users:

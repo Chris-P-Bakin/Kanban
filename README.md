@@ -9,7 +9,7 @@ A real-time collaborative Kanban board built with Flask, SQLite, and WebSockets.
 - **Inline Editing**: Double-click cards to edit title, description, due date, and assignee
 - **Subtasks**: Add, toggle, and remove subtasks with checkboxes
 - **Due Dates**: Optional due dates with automatic sorting (earliest first)
-- **Assignees**: Dropdown selection from user database
+- **Assignees**: Dropdown selection from user database (Alice, Bob)
 - **Real-time Sync**: Live updates across multiple browser sessions via WebSockets
 - **Persistent Storage**: SQLite database
 - **Responsive Design**: Works on desktop and mobile
