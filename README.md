@@ -4,15 +4,14 @@ A real-time collaborative Kanban board built with Flask, SQLite, and WebSockets.
 
 ## Features
 
-- **Three Columns**: To-Do, In Progress, Done with color-coded accents
-- **Drag & Drop**: Move cards between columns with visual feedback
-- **Inline Editing**: Double-click cards to edit title, description, due date, and assignee
-- **Subtasks**: Add, toggle, and remove subtasks with checkboxes
-- **Due Dates**: Optional due dates with automatic sorting (earliest first)
-- **Assignees**: Dropdown selection from user database (Alice, Bob)
-- **Real-time Sync**: Live updates across multiple browser sessions via WebSockets
+- **Three Columns**: To-Do, In Progress, Done with drag & drop
+- **Inline Editing**: Double-click cards to edit title, description, due date, assignee, tags, and time
+- **Subtasks**: Add, toggle, and remove with checkboxes
+- **Tags**: Multi-tag support with autocomplete and filtering
+- **Time Tracking**: Optional estimated time in minutes (30m, 1h 30m, etc.)
+- **Dark/Light Mode**: Theme toggle with preference saving
+- **Real-time Sync**: Live updates across multiple browser sessions
 - **Persistent Storage**: SQLite database
-- **Responsive Design**: Works on desktop and mobile
 
 ## Quick Start
 
@@ -32,22 +31,22 @@ Open `http://127.0.0.1:5001` in your browser.
 
 ## Usage
 
-- **Add Cards**: Click the "+ Add new card" ghost card in To-Do column
-- **Edit Cards**: Double-click any card to edit inline
+- **Add Cards**: Click the ghost card in To-Do column
+- **Edit Cards**: Double-click to edit inline
 - **Move Cards**: Drag and drop between columns
-- **Add Subtasks**: In edit mode, type in the subtask field and press Enter
-- **Assign Users**: Use the dropdown to assign to defined users
-- **Set Due Dates**: Use the date picker for deadline tracking
+- **Tags**: Type with autocomplete, filter with top bar
+- **Tag Manager**: Press Ctrl+T to add/edit/delete tags
+- **Theme**: Click moon/sun button in top right
 
 ## Database
 
-- **SQLite**: Data persists in `kanban.db` file
-- **Auto-initialization**: Database and tables created on first run
+- **SQLite**: Data persists in `kanban.db` (stored under `instance/`)
+- **Auto-initialization**: Database and tables are created on first run
 
 ## Tech Stack
 
 - **Backend**: Flask, SQLAlchemy, Flask-SocketIO
 - **Database**: SQLite
 - **Frontend**: Vanilla JavaScript, HTML5 Drag & Drop
-- **Real-time**: WebSocket connections for live updates
+- **Real-time**: WebSocket connections for live updates (Flask-SocketIO)
 

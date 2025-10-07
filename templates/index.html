@@ -7,9 +7,25 @@
     <link rel="stylesheet" href="/static/style.css">
   </head>
   <body>
-    <header class="app-header">
-      <h1>Kanban Board</h1>
-    </header>
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-controls">
+            <label for="tag-filter">Filter by tags:</label>
+            <div class="multi-tag-filter">
+              <div class="tag-filter-container">
+                <input type="text" id="tag-filter-input" placeholder="Type to search tags..." class="tag-filter-input">
+                <div id="tag-filter-dropdown" class="tag-filter-dropdown hidden"></div>
+              </div>
+              <div id="selected-tags" class="selected-tags"></div>
+            </div>
+            <button id="clear-filter" class="btn btn-ghost">Clear All</button>
+          </div>
+          <div class="theme-toggle">
+            <button id="theme-toggle" class="theme-toggle-btn" title="Toggle dark/light mode">
+              <span class="theme-icon">🌙</span>
+            </button>
+          </div>
+        </div>
 
     <main class="board" id="board">
       <section class="column" data-column="todo">
@@ -39,20 +55,26 @@
             <span>Description</span>
             <textarea id="modal-description" name="description" rows="3" placeholder="Description"></textarea>
           </label>
-          <div class="row">
-            <label>
-              <span>Due date</span>
-              <input id="modal-dueDate" name="dueDate" type="date">
-            </label>
-            <label>
-              <span>Column</span>
-              <select id="modal-column" name="column">
-                <option value="todo">To-Do</option>
-                <option value="in_progress">In Progress</option>
-                <option value="done">Done</option>
-              </select>
-            </label>
-          </div>
+            <div class="row">
+              <label>
+                <span>Due date</span>
+                <input id="modal-dueDate" name="dueDate" type="date">
+              </label>
+              <label>
+                <span>Time (minutes)</span>
+                <input id="modal-estimatedTime" name="estimatedTime" type="number" min="1" placeholder="e.g. 30">
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                <span>Column</span>
+                <select id="modal-column" name="column">
+                  <option value="todo">To-Do</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </label>
+            </div>
           <div class="actions">
             <button type="button" id="modal-cancel" class="btn btn-ghost">Cancel</button>
             <button type="submit" class="btn btn-primary">Create</button>
@@ -61,17 +83,81 @@
       </div>
     </div>
 
+    <!-- Tag Management Modal -->
+    <div id="tag-management-modal" class="modal-overlay hidden" aria-hidden="true">
+      <div class="modal">
+        <h3>Manage Tags</h3>
+        <div class="tag-management">
+          <div class="add-tag-section">
+            <h4>Add New Tag</h4>
+            <form id="add-tag-form" class="tag-form">
+              <div class="form-row">
+                <input id="new-tag-name" type="text" placeholder="Tag name" required>
+                <div class="color-picker">
+                  <label>Color:</label>
+                  <div class="color-options">
+                    <input type="radio" name="tag-color" id="color-1" value="#93c5fd" checked>
+                    <label for="color-1" class="color-swatch" style="background-color: #93c5fd;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-2" value="#fca5a5">
+                    <label for="color-2" class="color-swatch" style="background-color: #fca5a5;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-3" value="#86efac">
+                    <label for="color-3" class="color-swatch" style="background-color: #86efac;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-4" value="#fde68a">
+                    <label for="color-4" class="color-swatch" style="background-color: #fde68a;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-5" value="#c4b5fd">
+                    <label for="color-5" class="color-swatch" style="background-color: #c4b5fd;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-6" value="#f9a8d4">
+                    <label for="color-6" class="color-swatch" style="background-color: #f9a8d4;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-7" value="#a7f3d0">
+                    <label for="color-7" class="color-swatch" style="background-color: #a7f3d0;"></label>
+                    
+                    <input type="radio" name="tag-color" id="color-8" value="#fbbf24">
+                    <label for="color-8" class="color-swatch" style="background-color: #fbbf24;"></label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Tag</button>
+              </div>
+            </form>
+          </div>
+          
+          <div class="existing-tags-section">
+            <h4>Existing Tags</h4>
+            <div id="tags-list" class="tags-list">
+              <!-- Tags will be populated here -->
+            </div>
+          </div>
+          
+          <div class="actions">
+            <button type="button" id="tag-modal-close" class="btn btn-ghost">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <template id="card-template">
       <article class="card" draggable="true">
         <h3 class="card-title"></h3>
         <p class="card-desc"></p>
-        <div class="card-meta">
-          <span class="card-due"></span>
-          <span class="card-assignee"></span>
-        </div>
+            <div class="card-meta">
+              <span class="card-due"></span>
+              <span class="card-assignee"></span>
+              <span class="card-time"></span>
+            </div>
+        <div class="card-tags"></div>
         <ul class="subtasks"></ul>
       </article>
     </template>
+
+    <!-- Archive Drop Zone -->
+    <div id="archive-drop-zone" class="archive-drop-zone">
+      <div class="message">🗄️ Drop here to archive card</div>
+    </div>
 
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="/static/main.js"></script>
