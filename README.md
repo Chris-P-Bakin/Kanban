@@ -1,6 +1,6 @@
 # Kanban Board
 
-A real-time collaborative Kanban board built with Flask, SQLite, and WebSockets.
+A real-time collaborative Kanban board built with Flask, SQLite, and WebSockets. Made to be used on a Dakboard but can be used anywhere.
 
 ## Features
 
@@ -9,9 +9,9 @@ A real-time collaborative Kanban board built with Flask, SQLite, and WebSockets.
 - **Inline Editing**: Double-click cards to edit title, description, due date, and assignee
 - **Subtasks**: Add, toggle, and remove subtasks with checkboxes
 - **Due Dates**: Optional due dates with automatic sorting (earliest first)
-- **Assignees**: Dropdown selection from user database (Thomas, Kelly)
+- **Assignees**: Dropdown selection from user database
 - **Real-time Sync**: Live updates across multiple browser sessions via WebSockets
-- **Persistent Storage**: SQLite database with sample data
+- **Persistent Storage**: SQLite database
 - **Responsive Design**: Works on desktop and mobile
 
 ## Quick Start
@@ -36,13 +36,12 @@ Open `http://127.0.0.1:5001` in your browser.
 - **Edit Cards**: Double-click any card to edit inline
 - **Move Cards**: Drag and drop between columns
 - **Add Subtasks**: In edit mode, type in the subtask field and press Enter
-- **Assign Users**: Use the dropdown to assign Thomas or Kelly
+- **Assign Users**: Use the dropdown to assign to defined users
 - **Set Due Dates**: Use the date picker for deadline tracking
 
 ## Database
 
 - **SQLite**: Data persists in `kanban.db` file
-- **Sample Data**: Includes sample cards and users (Thomas, Kelly)
 - **Auto-initialization**: Database and tables created on first run
 
 ## Tech Stack
