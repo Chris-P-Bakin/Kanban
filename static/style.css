@@ -1,0 +1,63 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: #0b1520; background: #f6f8fb; }
+.app-header { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding: 16px 24px; background: white; border-bottom: 1px solid #e5e9f0; position: sticky; top: 0; }
+.app-header h1 { margin: 0; font-size: 20px; }
+
+.board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 16px; height: calc(100vh - 70px); }
+.column { background: #f9fbff; border: 1px solid #e5e9f0; border-radius: 12px; display: flex; flex-direction: column; min-width: 280px; }
+.column h2 { font-size: 16px; font-weight: 600; padding: 12px 14px; margin: 0; border-bottom: 1px solid #e5e9f0; }
+.cards { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+
+.card { background: white; border: 1px solid #dfe6ef; border-radius: 10px; padding: 12px; box-shadow: 0 1px 0 rgba(16,24,40,0.04); cursor: grab; }
+.card:active { cursor: grabbing; }
+.card .card-title { font-size: 14px; margin: 0 0 6px 0; }
+.card .card-desc { font-size: 12px; color: #4b5563; margin: 0; }
+.card .card-meta { margin-top: 6px; font-size: 11px; color: #6b7280; display: flex; gap: 8px; }
+.card .card-due::before { content: "Due:"; margin-right: 4px; color: #374151; }
+.card .card-assignee::before { content: "@"; margin-right: 2px; color: #475569; }
+.subtasks { list-style: none; padding: 8px 0 0 0; margin: 6px 0 0 0; display: flex; flex-direction: column; gap: 6px; }
+.subtasks li { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.subtasks input[type="checkbox"] { width: 14px; height: 14px; }
+.subtasks .remove { margin-left: auto; background: transparent; border: 1px solid #e5e7eb; border-radius: 6px; padding: 2px 6px; font-size: 11px; cursor: pointer; color: #6b7280; }
+.subtasks .remove:hover { background: #f3f4f6; color: #374151; }
+
+.column.drag-over { outline: 2px dashed #2563eb; outline-offset: -6px; }
+
+/* Card left-edge color accents (keep subtle column boxes) */
+.column[data-column="todo"] .card { border-left: 4px solid #ef4444; }
+.column[data-column="in_progress"] .card { border-left: 4px solid #f59e0b; }
+.column[data-column="done"] .card { border-left: 4px solid #10b981; }
+
+/* Inline editing styles */
+.card.editing { cursor: default; }
+.card.editing input.edit-title,
+.card.editing textarea.edit-desc { width: 100%; border: 1px solid #c9d3e0; border-radius: 8px; padding: 8px 10px; font: inherit; margin-bottom: 12px; }
+.card.editing input.edit-assignee, .card.editing input.edit-due, .card.editing select.edit-assignee { width: 100%; border: 1px solid #c9d3e0; border-radius: 8px; padding: 8px 10px; font: inherit; }
+.card.editing input.edit-subtask { width: 100%; border: 1px solid #c9d3e0; border-radius: 8px; padding: 8px 10px; font: inherit; background: #fff; margin-top: 12px; }
+.card.editing textarea.edit-desc { resize: vertical; }
+.card .edit-actions { display: flex; gap: 8px; margin-top: 12px; }
+.card .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.btn { padding: 6px 10px; border-radius: 8px; border: 1px solid transparent; background: #e9eef7; color: #111827; cursor: pointer; }
+.btn-primary { background: #2563eb; color: #fff; }
+.btn-ghost { background: transparent; border-color: #c9d3e0; }
+
+@media (max-width: 900px) {
+  .board { grid-template-columns: 1fr; height: auto; }
+}
+
+/* Ghost card */
+.ghost-card { background: #ffffff; border: 1px dashed #cbd5e1; color: #6b7280; display: flex; align-items: center; justify-content: center; border-radius: 10px; padding: 12px; cursor: pointer; }
+.ghost-card:hover { background: #f8fafc; border-color: #94a3b8; color: #334155; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.5); z-index: 100; }
+.modal-overlay.hidden { display: none; }
+.modal { width: min(560px, 92vw); background: #fff; border-radius: 12px; border: 1px solid #e5e9f0; box-shadow: 0 10px 40px rgba(2, 6, 23, 0.25); padding: 16px; }
+.modal h3 { margin: 0 0 12px 0; font-size: 18px; }
+.modal-form { display: flex; flex-direction: column; gap: 12px; }
+.modal-form label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #334155; }
+.modal-form input, .modal-form textarea, .modal-form select { padding: 8px 10px; border: 1px solid #d0d7e2; border-radius: 8px; background: #fff; font: inherit; }
+.modal-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-form .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+
+

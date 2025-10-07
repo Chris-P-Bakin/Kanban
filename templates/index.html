@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kanban</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Kanban Board</h1>
+    </header>
+
+    <main class="board" id="board">
+      <section class="column" data-column="todo">
+        <h2>To-Do</h2>
+        <div class="cards" id="todo"></div>
+      </section>
+      <section class="column" data-column="in_progress">
+        <h2>In Progress</h2>
+        <div class="cards" id="in_progress"></div>
+      </section>
+      <section class="column" data-column="done">
+        <h2>Done</h2>
+        <div class="cards" id="done"></div>
+      </section>
+    </main>
+
+    <!-- New Card Modal -->
+    <div id="new-card-modal" class="modal-overlay hidden" aria-hidden="true">
+      <div class="modal">
+        <h3>Create New Card</h3>
+        <form id="modal-new-card-form" class="modal-form">
+          <label>
+            <span>Title</span>
+            <input id="modal-title" name="title" type="text" placeholder="Card title" required>
+          </label>
+          <label>
+            <span>Description</span>
+            <textarea id="modal-description" name="description" rows="3" placeholder="Description"></textarea>
+          </label>
+          <div class="row">
+            <label>
+              <span>Due date</span>
+              <input id="modal-dueDate" name="dueDate" type="date">
+            </label>
+            <label>
+              <span>Column</span>
+              <select id="modal-column" name="column">
+                <option value="todo">To-Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions">
+            <button type="button" id="modal-cancel" class="btn btn-ghost">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <template id="card-template">
+      <article class="card" draggable="true">
+        <h3 class="card-title"></h3>
+        <p class="card-desc"></p>
+        <div class="card-meta">
+          <span class="card-due"></span>
+          <span class="card-assignee"></span>
+        </div>
+        <ul class="subtasks"></ul>
+      </article>
+    </template>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/static/main.js"></script>
+  </body>
+  </html>
+
+
